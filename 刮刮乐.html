@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>刮刮乐</title>
+	<style>
+	*{
+		margin:0;
+		padding: 0;
+	}
+	#box{
+		width: 450px;
+		height: 280px;
+		overflow: hidden;
+		position: relative;
+		margin:50px auto 0;
+	}
+	#text{
+		width: 450px;
+		height: 280px;
+		border:5px dashed #000;
+		box-sizing:border-box;
+		color: red;
+		text-align: center;
+		line-height: 270px;
+		font-size:60px;
+		font-weight: bold;
+	}
+	#cvs{
+		position: absolute;
+		left: 0;
+		top: 0;
+	}
+	</style>
+</head>
+<body>
+	<div id="box">
+		<div id="text">平易近人</div>
+		<canvas id="cvs" width="450" height="280"></canvas>
+	</div>
+	<script>
+		var box=document.getElementById('box');
+		var text=document.getElementById('text');
+		var cvs=document.getElementById('cvs');
+		var ctx=cvs.getContext('2d');
+
+		//显示的数组
+		var arr=['平易近人','宽宏大度','冰清玉洁','持之以恒','平易近人','宽宏大度','冰清玉洁','持之以恒','平易近人','宽宏大度','冰清玉洁','持之以恒','平易近人','宽宏大度','冰清玉洁','持之以恒','平易近人','宽宏大度','冰清玉洁','持之以恒']
+		
+		//随机数
+		var s=Math.floor(Math.random()*20);
+		text.innerHTML=arr[s];
+		
+		//画布显示图片
+		var img=new Image();
+		img.src="gua.jpg";
+		img.onload=function(){
+			ctx.beginPath();
+
+
+
+			
+			ctx.drawImage(img,0,0);
+			ctx.closePath();
+		}
+
+		var x=0;
+		var y=0;
+		cvs.onmousedown=function(e){
+			e.preventDefault();
+			ctx.globalCompositeOperation='destination-out';//只显示旧图
+			document.onmousemove=function(e){    
+				x=e.clientX-box.offsetLeft;
+				y=e.clientY-box.offsetTop;
+				ctx.beginPath();
+				ctx.arc(x,y,15,0,2*Math.PI,true);
+				ctx.fill();
+				ctx.closePath();
+			}
+			document.onmouseup=function(){
+				document.onmousemove=null;
+			}
+		}
+	</script>
+</body>
+</html>
